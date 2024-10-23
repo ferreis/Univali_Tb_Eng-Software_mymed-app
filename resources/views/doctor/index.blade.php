@@ -8,6 +8,7 @@
             <div class="grid grid-cols-1">
                 @if ($pacientes->isNotEmpty())
                     @foreach ($pacientes as $paciente)
+                    <a href="">
                         <div class="mb-4 p-4 border border-gray-300 rounded bg-white">
                             <p><strong>Paciente:</strong> {{ $paciente->user->name }}</p>
                             <p><strong>RG:</strong> {{ $paciente->user->rg }}</p>
@@ -15,6 +16,7 @@
                             <p><strong>Endereço:</strong> {{ $paciente->user->endereco }}</p>
                             <p><strong>Telefone:</strong> {{ $paciente->user->telefone }}</p>
                         </div>
+                    </a>
                     @endforeach
                 @endif
             </div>
