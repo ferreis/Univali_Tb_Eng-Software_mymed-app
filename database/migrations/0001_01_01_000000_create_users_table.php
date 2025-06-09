@@ -16,7 +16,9 @@ return new class extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
-            $table->string('username')->unique()->after('email');
+            // the `after` modifier is only available for MySQL. Removing it
+            // keeps the migration database agnostic so it works with PostgreSQL
+            $table->string('username')->unique();
             $table->string('telefone')->nullable();
             $table->string('cpf')->unique();
             $table->string('rg')->unique();

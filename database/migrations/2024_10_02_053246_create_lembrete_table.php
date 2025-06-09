@@ -14,14 +14,21 @@ return new class extends Migration
         Schema::create('lembrete', function (Blueprint $table) {
             $table->id();
             $table->string('mensagem');
-            $table->dateTime('dataHora');
+            $table->dateTime('dataHora')->index();
             $table->unsignedBigInteger('medico_id')->nullable();  // Relacionamento com o médico
             $table->unsignedBigInteger('paciente_id')->nullable(); // Relacionamento com o paciente
             $table->timestamps();
 
-            // Chaves estrangeiras
-            $table->foreign('medico_id')->references('id')->on('medico')->onDelete('cascade');
-            $table->foreign('paciente_id')->references('id')->on('paciente')->onDelete('cascade');
+            // Chaves estrangeiras e índices para otimizar consultas
+            $table->foreign('medico_id')
+                  ->references('id')
+                  ->on('medico')
+                  ->onDelete('cascade');
+            $table->foreign('paciente_id')
+                  ->references('id')
+                  ->on('paciente')
+                  ->onDelete('cascade');
+            $table->index(['medico_id', 'paciente_id']);
         });
 
 

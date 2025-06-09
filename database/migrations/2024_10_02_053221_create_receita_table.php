@@ -14,18 +14,26 @@ return new class extends Migration
         Schema::create('receita', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->string('codigoUnico', 32);
-            $table->timestamp('dataEmissao');
+            // codigo precisa ser unico para busca rápida por parte da farmácia
+            $table->string('codigoUnico', 32)->unique();
+            $table->timestamp('dataEmissao')->index();
             $table->string('tipoEspecial', 254)->nullable();
             $table->string('observacoes', 254)->nullable();
-            $table->boolean('resgatada');
+            $table->boolean('resgatada')->default(false);
 
             $table->unsignedBigInteger('medico_id')->nullable();  // Relacionamento com o médico
             $table->unsignedBigInteger('paciente_id')->nullable(); // Relacionamento com o paciente
 
-            // Chaves estrangeiras
-            $table->foreign('medico_id')->references('id')->on('medico')->onDelete('cascade');
-            $table->foreign('paciente_id')->references('id')->on('paciente')->onDelete('cascade');
+            // Chaves estrangeiras com índice para melhorar performance
+            $table->foreign('medico_id')
+                  ->references('id')
+                  ->on('medico')
+                  ->onDelete('cascade');
+            $table->foreign('paciente_id')
+                  ->references('id')
+                  ->on('paciente')
+                  ->onDelete('cascade');
+            $table->index(['medico_id', 'paciente_id']);
         });
 
     }
