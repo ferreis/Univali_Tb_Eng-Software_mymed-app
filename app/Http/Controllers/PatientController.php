@@ -73,12 +73,12 @@ class PatientController extends Controller
         }
 
         // Salvar o conteúdo no arquivo
-        $filePath = '\pacientes.txt';
+        $filePath = 'pacientes.txt';
         Storage::disk('public')->put($filePath, $content);
 
         // Verifique se o arquivo foi criado
         if (Storage::disk('public')->exists($filePath)) {
-            return response()->download(storage_path("\app\public\pacientes.txt"));
+            return response()->download(storage_path("app/public/" . $filePath));
         } else {
             return response()->json(['error' => 'O arquivo não pôde ser criado.'], 500);
         }
