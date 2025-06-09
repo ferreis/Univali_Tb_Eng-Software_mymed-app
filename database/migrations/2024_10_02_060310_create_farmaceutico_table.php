@@ -13,7 +13,10 @@ class CreateFarmaceuticoTable extends Migration
             $table->unsignedBigInteger('usuario')->unique();
             $table->string('empresa', 254)->unique();
 
-            $table->foreign('usuario')->references('id')->on('users');
+            $table->foreign('usuario')
+                  ->references('id')
+                  ->on('users')
+                  ->onDelete('cascade');
         });
     }
 

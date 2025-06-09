@@ -13,7 +13,10 @@ class CreatePacienteTable extends Migration
             $table->timestamps();
             $table->unsignedBigInteger('usuario')->unique();
 
-            $table->foreign('usuario')->references('id')->on('users');
+            $table->foreign('usuario')
+                  ->references('id')
+                  ->on('users')
+                  ->onDelete('cascade');
         });
 
     }

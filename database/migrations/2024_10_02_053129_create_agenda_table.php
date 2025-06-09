@@ -11,13 +11,19 @@ return new class extends Migration
      */
     public function up(): void
     {
- Schema::create('agenda', function (Blueprint $table) {
+        Schema::create('agenda', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
             $table->unsignedBigInteger('paciente');
-            $table->timestamp('dataConsulta');
+            $table->timestamp('dataConsulta')->index();
 
-            $table->foreign('paciente')->references('id')->on('paciente');
+            // index improves search by paciente id and guarantees performance on
+            // PostgreSQL as well
+            $table->foreign('paciente')
+                  ->references('id')
+                  ->on('paciente')
+                  ->onDelete('cascade');
+            $table->index('paciente');
         });
     }
 
