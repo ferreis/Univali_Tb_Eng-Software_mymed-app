@@ -122,7 +122,7 @@ return new class extends Migration
         Schema::create('receita', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->string('codigoUnico', 32)->unique();
+            $table->uuid('codigoUnico', 32)->unique();
             $table->timestamp('dataEmissao')->index();
             $table->string('tipoEspecial', 254)->nullable();
             $table->string('observacoes', 254)->nullable();
